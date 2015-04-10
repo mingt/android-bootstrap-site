@@ -4,6 +4,11 @@ var wrench = require('wrench'),
     fs = require('fs'),
     async = require('async'),
     zip = require("node-native-zip");
+
+// process.env.PWD may break on some platform, and fix this by making
+// it dependent on where scripted process is launched from.
+var pathResolve = require('path').resolve;
+
 /*
  * Project generator route. 
  * This entire route is super brute force and rather naive. However, it works and is easy to follow. 
@@ -19,7 +24,8 @@ exports.index = function(req, res) {
     // 5. Delete the temporary file(s). 
     // 6. All Done - Do some 12 ounce curls. 
 
-    console.log(process.env.PWD);
+    var currentDir = pathResolve(__dirname, '../');
+    console.log(currentDir);
 
     var appName = req.query.appName;
     var packageName = req.query.packageName;
@@ -28,10 +34,10 @@ exports.index = function(req, res) {
     console.log("Package Name:" + packageName);
 
     // Android Bootstrap ource directory
-    var sourceDir = process.env.PWD + '/android-bootstrap';
+    var sourceDir = currentDir + '/android-bootstrap';
     
     // Temporary locationwhere the users project will be generated.
-    var destDir = process.env.PWD + '/tmp/' + packageName; 
+    var destDir = currentDir + '/tmp/' + packageName;
 
     console.log("sourceDir: " + sourceDir);
     console.log("destDir: " + destDir); 
