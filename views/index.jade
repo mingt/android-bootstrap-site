@@ -31,6 +31,9 @@ block content
       div.form-group
         input(id='packageName', type='text', placeholder="com.yourapp.package.name").form-control.input-lg
       div
+        p Current version is: &nbsp;
+         strong #{VERSION}
+      div
         input(type='submit', value='Generate Your App', id='generate-app', class='btn btn-success btn-large').form-control.input-lg
 
       div(style='margin-top:10px').alert.alert-warning
